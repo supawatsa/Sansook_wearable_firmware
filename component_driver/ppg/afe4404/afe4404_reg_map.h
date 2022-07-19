@@ -118,19 +118,19 @@
 //Clockout Settings
 #define CLKOUT            0x29  /**< Clockout Address */
 /* *****************************************************************************
-  *  CLKOUT_DIV Register Settings Graph
-  * ****************************************************************************
-  * CLKOUT_DIV Register Settings | Division Ratio | Output Clock Freq. ( MHz ) *
-  *             0                |         1      |             4              *
-  *             1                |         2      |             2              *
-  *             2                |         4      |             1              *
-  *             3                |         8      |            0.5             *
-  *             4                |        16      |           0.25             *
-  *             5                |        32      |          0.125             *
-  *             6                |        64      |         0.0625             *
-  *             7                |       128      |        0.03125             *
-  *         8..15                |    Do not use  |      Do not use            *
-  *****************************************************************************/
+	*  CLKOUT_DIV Register Settings Graph
+	* ****************************************************************************
+	* CLKOUT_DIV Register Settings | Division Ratio | Output Clock Freq. ( MHz ) *
+	*             0                |         1      |             4              *
+	*             1                |         2      |             2              *
+	*             2                |         4      |             1              *
+	*             3                |         8      |            0.5             *
+	*             4                |        16      |           0.25             *
+	*             5                |        32      |          0.125             *
+	*             6                |        64      |         0.0625             *
+	*             7                |       128      |        0.03125             *
+	*         8..15                |    Do not use  |      Do not use            *
+	*****************************************************************************/
 
 //LED1 Output Value
 #define LED1VAL           0x2C  /**< LED1 Output code in twos complement      */
@@ -161,18 +161,18 @@
 #define CLKDIV_EXTMODE       0  /**< Ext Clock Div Ration bits 0-2            */
 
 /* *****************************************************************************
-  *  CLKDIV_EXTMODE Register Settings Graph
-  * ****************************************************************************
-  * CLKDIV_EXTMODE Settings      | Division Ratio | Allowed Clock Freq ( MHz ) *
-  *             0                |         2      |           8-12             *
-  *             1                |         8      |          32-48             *
-  *             2                |    Do Not Use  |       Do Not Use           *
-  *             3                |         8      |          48-60             *
-  *             4                |        16      |          16-24             *
-  *             5                |        32      |            4-6             *
-  *             6                |        64      |          24-36             *
-  *             7                |    Do Not Use  |       Do Not Use           *
-  *****************************************************************************/
+	*  CLKDIV_EXTMODE Register Settings Graph
+	* ****************************************************************************
+	* CLKDIV_EXTMODE Settings      | Division Ratio | Allowed Clock Freq ( MHz ) *
+	*             0                |         2      |           8-12             *
+	*             1                |         8      |          32-48             *
+	*             2                |    Do Not Use  |       Do Not Use           *
+	*             3                |         8      |          48-60             *
+	*             4                |        16      |          16-24             *
+	*             5                |        32      |            4-6             *
+	*             6                |        64      |          24-36             *
+	*             7                |    Do Not Use  |       Do Not Use           *
+	*****************************************************************************/
 
 //PDN_CYCLE Start / End
 #define PDNCYCLESTC       0x32  /**< Bits 0-15                                */
@@ -189,18 +189,18 @@
 //PRF Clock Division settings
 #define CLKDIV_PRF        0x39  /**< Clock Division Ratio for timing engine   */
 /* ****************************************************************************
-  *   CLKDIV_PRF Register Settings Graph
-  * ****************************************************************************
-  * CLKDIV_PRF Settings|Division Ratio|Clock Freq(MHz)| Lowest PRF Setting (Hz)*
-  *          0         |       1      |       4       |           61           *
-  *          1         |  Do Not Use  |  Do Not Use   |      Do Not Use        *
-  *          2         |  Do Not Use  |  Do Not Use   |      Do Not Use        *
-  *          3         |  Do Not Use  |  Do Not Use   |      Do Not Use        *
-  *          4         |       2      |       2       |           31           *
-  *          5         |       4      |       1       |           15           *
-  *          6         |       8      |     0.5       |            8           *
-  *          7         |      16      |    0.25       |            4           *
-  *****************************************************************************/
+	*   CLKDIV_PRF Register Settings Graph
+	* ****************************************************************************
+	* CLKDIV_PRF Settings|Division Ratio|Clock Freq(MHz)| Lowest PRF Setting (Hz)*
+	*          0         |       1      |       4       |           61           *
+	*          1         |  Do Not Use  |  Do Not Use   |      Do Not Use        *
+	*          2         |  Do Not Use  |  Do Not Use   |      Do Not Use        *
+	*          3         |  Do Not Use  |  Do Not Use   |      Do Not Use        *
+	*          4         |       2      |       2       |           31           *
+	*          5         |       4      |       1       |           15           *
+	*          6         |       8      |     0.5       |            8           *
+	*          7         |      16      |    0.25       |            4           *
+	*****************************************************************************/
 
 //DAC Settings
 #define DAC_SETTING       0x3A  /**< DAC Settings Address                     */

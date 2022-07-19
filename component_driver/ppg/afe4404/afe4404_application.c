@@ -1,10 +1,5 @@
 #include"afe4404_application.h"
 
-void hw_afe4404_event_handler(nrf_drv_twi_evt_t const * p_event, void * p_context);
-uint32_t hw_afe4404_init(void);
-uint32_t hw_afe4404_register_read(uint8_t reg, uint8_t * p_data, uint32_t length);
-uint32_t hw_afe4404_write_single_register(uint8_t reg, uint8_t data);
-
 
 #define LED2STC_timing       
 #define LED2ENDC_timing
@@ -34,6 +29,8 @@ uint32_t hw_afe4404_write_single_register(uint8_t reg, uint8_t data);
 #define ADCRSTENDCT2_timing
 #define ADCRSTSTCT3_timing
 #define ADCRSTENDCT3_timing
+#define PDNCYCLESTC_timing
+#define PDNCYCLEENDC_timing
 #define PRPCT_counter 39999
 
 //---------------------------------------------------------------------------------------------
@@ -106,8 +103,7 @@ void afe4404_set_power(void)
 //---------------------------------------------------------------------------------------------
 void afe4404_set_softreset(void)
 {
-
-
+	hw_afe4404_write_single_register(DIAGNOSIS,DIAGNOSIS_SWRESET);
 }
 //---------------------------------------------------------------------------------------------
 void afe4404_app_power_low(void)
@@ -117,7 +113,7 @@ void afe4404_app_power_low(void)
 }
 void afe4404_app_power_down(void)
 {
-
+// hold reset pin forv 200 us
 
 }
 //---------------------------------------------------------------------------------------------
@@ -130,7 +126,7 @@ void afe4404_app_power_normal(void)
 
 void afe4404_app_init(void)
 {
-	
+	hw_afe4404_init();
 	afe4404_set_power();
 	afe4404_app_power_normal();
 	hw_afe4404_write_single_register(LED2STC,LED2STC_timing);
@@ -165,6 +161,8 @@ void afe4404_app_init(void)
 	hw_afe4404_write_single_register(ADCRSTENDCT2,ADCRSTENDCT2_timing);
 	hw_afe4404_write_single_register(ADCRSTSTCT3,ADCRSTSTCT3_timing);
 	hw_afe4404_write_single_register(ADCRSTENDCT3,ADCRSTENDCT3_timing);
+	hw_afe4404_write_single_register(PDNCYCLESTC,PDNCYCLESTC_timing);
+	hw_afe4404_write_single_register(PDNCYCLEENDC,PDNCYCLEENDC_timing);
 
 	afe4404_set_prpct_count( PRPCT_counter ); 
 	afe4404_set_timer_and_average_num( true, 3 );
