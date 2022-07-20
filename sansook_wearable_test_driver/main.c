@@ -68,6 +68,7 @@
 #include "app_util_platform.h"
 #include "bsp_btn_ble.h"
 #include "nrf_pwr_mgmt.h"
+#include "app.h"
 
 #if defined (UART_PRESENT)
 #include "nrf_uart.h"
@@ -110,7 +111,7 @@ NRF_BLE_GATT_DEF(m_gatt);                                                       
 NRF_BLE_QWR_DEF(m_qwr);                                                             /**< Context for the Queued Write module.*/
 BLE_ADVERTISING_DEF(m_advertising);                                                 /**< Advertising module instance. */
 
-static uint16_t   m_conn_handle          = BLE_CONN_HANDLE_INVALID;                 /**< Handle of the current connection. */
+static uint16_t m_conn_handle          = BLE_CONN_HANDLE_INVALID;                 /**< Handle of the current connection. */
 static uint16_t   m_ble_nus_max_data_len = BLE_GATT_ATT_MTU_DEFAULT - 3;            /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Nordic UART service module. */
 static ble_uuid_t m_adv_uuids[]          =                                          /**< Universally unique service identifier. */
 {
@@ -715,7 +716,7 @@ int main(void)
     printf("\r\nUART started.\r\n");
     NRF_LOG_INFO("Debug logging for UART over RTT started.");
     advertising_start();
-
+    app_init();
     // Enter main loop.
     for (;;)
     {
