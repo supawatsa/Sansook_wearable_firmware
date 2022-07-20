@@ -27,7 +27,7 @@
 
 //Sample LED2 Start / End
 #define LED2STC           0x01
-#define LED2LEDENDC       0x02
+#define LED2ENDC          0x02
 
 //LED1 Start / End
 #define LED1LEDSTC        0x03

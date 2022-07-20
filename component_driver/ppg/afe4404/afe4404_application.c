@@ -1,37 +1,37 @@
 #include"afe4404_application.h"
 
 
-#define LED2STC_timing       
-#define LED2ENDC_timing
-#define LED1LEDSTC_timing
-#define LED1LEDENDC_timing
-#define LED3STC_timing
-#define LED3ENDC_timing
-#define LED1STC_timing
-#define LED1ENDC_timing
-#define LED2LEDSTC_timing
-#define LED2LEDENDC_timing
-#define ALED1STC_timing
-#define ALED1ENDC_timing
-#define LED2CONVST_timing
-#define LED2CONVEND_timing
-#define LED3CONVST_timing
-#define LED3CONVEND_timing
-#define LED1CONVST_timing
-#define LED1CONVEND_timing
-#define ALED1CONVST_timing
-#define ALED1CONVEND_timing
-#define ADCRSTSTCT0_timing
-#define ADCRSTENDCT0_timing
-#define ADCRSTSTCT1_timing
-#define ADCRSTENDCT1_timing
-#define ADCRSTSTCT2_timing
-#define ADCRSTENDCT2_timing
-#define ADCRSTSTCT3_timing
-#define ADCRSTENDCT3_timing
-#define PDNCYCLESTC_timing
-#define PDNCYCLEENDC_timing
-#define PRPCT_counter 39999
+#define LED2STC_timing        100
+#define LED2ENDC_timing       399
+#define LED1LEDSTC_timing     802
+#define LED1LEDENDC_timing    1201
+#define LED3STC_timing        401
+#define LED3ENDC_timing       800
+#define LED1STC_timing        902
+#define LED1ENDC_timing       1201
+#define LED2LEDSTC_timing     0
+#define LED2LEDENDC_timing    399
+#define ALED1STC_timing       1303
+#define ALED1ENDC_timing      1602
+#define LED2CONVST_timing     409
+#define LED2CONVEND_timing    1468
+#define LED3CONVST_timing     1478
+#define LED3CONVEND_timing    2537
+#define LED1CONVST_timing     2547
+#define LED1CONVEND_timing    3606
+#define ALED1CONVST_timing    3616
+#define ALED1CONVEND_timing   4675
+#define ADCRSTSTCT0_timing    401
+#define ADCRSTENDCT0_timing   407
+#define ADCRSTSTCT1_timing    1470
+#define ADCRSTENDCT1_timing   1476
+#define ADCRSTSTCT2_timing    2539
+#define ADCRSTENDCT2_timing   2545
+#define ADCRSTSTCT3_timing    3608
+#define ADCRSTENDCT3_timing   3614
+#define PDNCYCLESTC_timing    5475
+#define PDNCYCLEENDC_timing   39199
+#define PRPCT_counter         39999
 
 //---------------------------------------------------------------------------------------------
 
@@ -113,6 +113,7 @@ void afe4404_app_power_low(void)
 }
 void afe4404_app_power_down(void)
 {
+  //nrf_gpio_pin_dir_set(GPIO_AFE_RESET, NRF_GPIO_PIN_DIR_OUTPUT);
 // hold reset pin forv 200 us
 
 }

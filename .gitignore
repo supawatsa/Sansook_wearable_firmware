@@ -2,6 +2,7 @@ nRF5_SDK_17.1.0_ddde560
 *.o
 *.hex
 *.jlink
+
 sansook_wearable_test_driver/pca10040/s112/ses/Output
 sansook_wearable_test_driver/pca10040/s132/ses/Output
 sansook_wearable_test_driver/pca10056/s140/ses/Output
