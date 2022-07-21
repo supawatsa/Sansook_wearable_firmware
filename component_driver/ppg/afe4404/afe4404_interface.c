@@ -1,18 +1,32 @@
 #include"afe4404_interface.h"
 #include"ConfigurationIO.h"
+#include <stdint.h>
+
 #define AFE4404_ADDRESS 88
 #define DEVICE_ADDRESS AFE4404_ADDRESS
-
+#define MPU_TWI_TIMEOUT 			10000 
 
 static const nrf_drv_twi_t m_twi_instance = NRF_DRV_TWI_INSTANCE(0);
+volatile static bool twi_tx_done = false;
+volatile static bool twi_rx_done = false;
+
 //-----------------------------------------------------------------------------------------------
 
 void hw_afe4404_event_handler(nrf_drv_twi_evt_t const * p_event, void * p_context)
 {
     switch (p_event->type)
     {
-        case NRF_DRV_TWI_EVT_DONE:
-            m_xfer_done = true;
+        case NRF_DRV_TWI_XFER_TX:
+            twi_tx_done = true;
+            break;
+        case NRF_DRV_TWI_XFER_TXTX:
+            twi_tx_done = true;
+            break;
+        case NRF_DRV_TWI_XFER_RX:
+            twi_rx_done = true;
+            break;
+        case NRF_DRV_TWI_XFER_TXRX:
+            twi_rx_done = true;
             break;
         default:
             break;
@@ -32,7 +46,7 @@ uint32_t hw_afe4404_init(void)
        .clear_bus_init     = false
     };
     
-    err_code = nrf_drv_twi_init(&m_twi_instance, &twi_mpu_config, twi_afe4404_handler, NULL);
+    err_code = nrf_drv_twi_init(&m_twi_instance, &twi_mpu_config, hw_afe4404_event_handler, NULL);
     if(err_code != NRF_SUCCESS)
     {
         return err_code;

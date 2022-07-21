@@ -51,7 +51,6 @@
       <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/components/libraries/fifo/app_fifo.c" />
       <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/components/libraries/scheduler/app_scheduler.c" />
       <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/components/libraries/timer/app_timer2.c" />
-      <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/components/libraries/uart/app_uart_fifo.c" />
       <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/components/libraries/util/app_util_platform.c" />
       <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/components/libraries/timer/drv_rtc.c" />
       <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/components/libraries/hardfault/hardfault_implementation.c" />
@@ -80,13 +79,14 @@
     </folder>
     <folder Name="nRF_Drivers">
       <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/integration/nrfx/legacy/nrf_drv_clock.c" />
-      <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/integration/nrfx/legacy/nrf_drv_uart.c" />
       <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/modules/nrfx/soc/nrfx_atomic.c" />
       <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/nrfx_clock.c" />
       <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/nrfx_gpiote.c" />
       <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/prs/nrfx_prs.c" />
-      <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/nrfx_uart.c" />
-      <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/nrfx_uarte.c" />
+      <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/integration/nrfx/legacy/nrf_drv_twi.c" />
+      <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/nrfx_twi.c" />
+      <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/nrfx_twi_twim.c" />
+      <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/nrfx_twim.c" />
     </folder>
     <folder Name="Board Support">
       <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/components/libraries/bsp/bsp.c" />
@@ -98,6 +98,8 @@
       <folder Name="app">
         <file file_name="../../../../app/app.h" />
         <file file_name="../../../../app/app.c" />
+        <file file_name="../../../../app/algorithm_app.h" />
+        <file file_name="../../../../app/algorithm_app.c" />
       </folder>
       <folder Name="ppg">
         <file file_name="../../../../component_driver/ppg/afe4404/afe4404_application.c" />
@@ -105,6 +107,8 @@
         <file file_name="../../../../component_driver/ppg/afe4404/afe4404_interface.c" />
         <file file_name="../../../../component_driver/ppg/afe4404/afe4404_interface.h" />
         <file file_name="../../../../component_driver/ppg/afe4404/afe4404_reg_map.h" />
+        <file file_name="../../../../app/ppg_app.h" />
+        <file file_name="../../../../app/ppg_app.c" />
       </folder>
       <folder Name="imu">
         <file file_name="../../../../component_driver/acc/STK8321/stk8321_application.c" />
@@ -112,6 +116,8 @@
         <file file_name="../../../../component_driver/acc/STK8321/stk8321_interface.c" />
         <file file_name="../../../../component_driver/acc/STK8321/stk8321_interface.h" />
         <file file_name="../../../../component_driver/acc/STK8321/stk8321_reg_map.h" />
+        <file file_name="../../../../app/imu_app.h" />
+        <file file_name="../../../../app/imu_app.c" />
       </folder>
       <file file_name="../../../../ec87/ConfigurationIO.h" />
       <folder Name="mem">
@@ -119,6 +125,10 @@
         <file file_name="../../../../component_driver/memory/ZB25Q128BD/zb25q128bd_interface.h" />
         <file file_name="../../../../component_driver/memory/ZB25Q128BD/zb25q128bd_reg_map.h" />
       </folder>
+      <folder Name="clocksync">
+        <file file_name="../../../../app/unixtime.c" />
+      </folder>
+      <folder Name="ui" />
     </folder>
     <folder Name="nRF_Segger_RTT">
       <file file_name="../../../../nRF5_SDK_17.1.0_ddde560/external/segger_rtt/SEGGER_RTT.c" />

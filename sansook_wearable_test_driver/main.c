@@ -64,19 +64,19 @@
 #include "nrf_ble_qwr.h"
 #include "app_timer.h"
 #include "ble_nus.h"
-#include "app_uart.h"
+//#include "app_uart.h"
 #include "app_util_platform.h"
 #include "bsp_btn_ble.h"
 #include "nrf_pwr_mgmt.h"
 #include "app.h"
-
+/*
 #if defined (UART_PRESENT)
 #include "nrf_uart.h"
 #endif
 #if defined (UARTE_PRESENT)
 #include "nrf_uarte.h"
 #endif
-
+*/
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
@@ -196,7 +196,7 @@ static void nrf_qwr_error_handler(uint32_t nrf_error)
 /**@snippet [Handling the data received over BLE] */
 static void nus_data_handler(ble_nus_evt_t * p_evt)
 {
-
+/*
     if (p_evt->type == BLE_NUS_EVT_RX_DATA)
     {
         uint32_t err_code;
@@ -221,7 +221,7 @@ static void nus_data_handler(ble_nus_evt_t * p_evt)
             while (app_uart_put('\n') == NRF_ERROR_BUSY);
         }
     }
-
+*/
 }
 /**@snippet [Handling the data received over BLE] */
 
@@ -519,6 +519,7 @@ void bsp_event_handler(bsp_event_t event)
  *          'new line' '\n' (hex 0x0A) or if the string has reached the maximum data length.
  */
 /**@snippet [Handling the data received over UART] */
+/*
 void uart_event_handle(app_uart_evt_t * p_event)
 {
     static uint8_t data_array[BLE_NUS_MAX_DATA_LEN];
@@ -569,12 +570,14 @@ void uart_event_handle(app_uart_evt_t * p_event)
             break;
     }
 }
+*/
 /**@snippet [Handling the data received over UART] */
 
 
 /**@brief  Function for initializing the UART module.
  */
 /**@snippet [UART Initialization] */
+/*
 static void uart_init(void)
 {
     uint32_t                     err_code;
@@ -601,6 +604,7 @@ static void uart_init(void)
                        err_code);
     APP_ERROR_CHECK(err_code);
 }
+*/
 /**@snippet [UART Initialization] */
 
 
@@ -699,8 +703,8 @@ int main(void)
 {
     bool erase_bonds;
 
-    // Initialize.
-    uart_init();
+  //Initialize.
+  //uart_init();
     log_init();
     timers_init();
     buttons_leds_init(&erase_bonds);
@@ -712,9 +716,9 @@ int main(void)
     advertising_init();
     conn_params_init();
 
-    // Start execution.
-    printf("\r\nUART started.\r\n");
-    NRF_LOG_INFO("Debug logging for UART over RTT started.");
+    //Start execution.
+    //printf("\r\nUART started.\r\n");
+    //NRF_LOG_INFO("Debug logging for UART over RTT started.");
     advertising_start();
     app_init();
     // Enter main loop.

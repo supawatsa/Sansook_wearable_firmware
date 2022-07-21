@@ -1,8 +1,8 @@
 #include"afe4404_application.h"
+#include <stdint.h>
 
-
-#define LED2STC_timing        100
-#define LED2ENDC_timing       399
+#define LED2STC_timing        (uint16_t)100
+#define LED2ENDC_timing       ((uint16_t)399)
 #define LED1LEDSTC_timing     802
 #define LED1LEDENDC_timing    1201
 #define LED3STC_timing        401
@@ -168,7 +168,7 @@ void afe4404_app_init(void)
 	afe4404_set_prpct_count( PRPCT_counter ); 
 	afe4404_set_timer_and_average_num( true, 3 );
 	afe4404_set_seperate_tia_gain( true, 0, 4 ); 
-	afe4404_set_tia_gain( false, 0, 3 )
+	afe4404_set_tia_gain( false, 0, 3 );
 	afe4404_set_led_currents( 15,3,3 );
 	afe4404_set_clkout_div( false, 2 );
 	afe4404_set_int_clk_div( 1 );
