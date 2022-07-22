@@ -1,0 +1,6 @@
+algorithm_task()
+{
+
+
+
+}
