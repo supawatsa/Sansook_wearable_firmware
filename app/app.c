@@ -4,6 +4,8 @@
 #include "nrf_gpio.h"
 #include "ConfigurationIO.h"
 #include "afe4404_application.h"
+#include "ppg_app.h"
+#include "nrf_log.h"
 //------------------------------------------------------------------------------------
 
 #define UPDATE_INTERVAL_MS              1000
@@ -15,11 +17,13 @@ uint32_t tempppg;
 //------------------------------------------------------------------------------------
 void app_task(void * p_context)
 {
-  ppg_task();
-  imu_task();
-  algorithm_task();
-  ui_task();
-  transfer_task();
+  //ppg_task();
+  //imu_task();
+  //algorithm_task();
+  //ui_task();
+  //transfer_task();
+  afe4404_app_getppg_1(&tempppg);
+  NRF_LOG_INFO("ppg1  %d  \n\r", tempppg);
 }
 //------------------------------------------------------------------------------------
 void app_init(void)
@@ -31,7 +35,8 @@ void app_init(void)
   nrf_gpio_pin_dir_set(GPIO_MOTOR, NRF_GPIO_PIN_DIR_OUTPUT);
   nrf_gpio_pin_set(GPIO_VDD_EN);
   afe4404_app_init();
-
+  
+  afe4404_app_getppg_1(&tempppg);
   //nrf_gpio_pin_set(GPIO_MOTOR);
   /*start timer*/
   err_code = app_timer_start(m_app_timer_id, APP_TASK_INTERVAL, NULL);

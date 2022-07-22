@@ -2,7 +2,8 @@
 #define AFE_REG_MAP_H
 
 
-#define AFE_ADDR 88
+//#define AFE_ADDR 0x58
+#define AFE4404_ADDRESS 0x58
 
 /* AFE4404 Registers*/
 

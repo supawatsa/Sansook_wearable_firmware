@@ -127,6 +127,7 @@ void afe4404_app_power_normal(void)
 
 void afe4404_app_init(void)
 {
+        hw_afe4404_reset();
 	hw_afe4404_init();
 	afe4404_set_power();
 	afe4404_app_power_normal();
@@ -177,14 +178,14 @@ void afe4404_app_init(void)
 //---------------------------------------------------------------------------------------------
 void afe4404_app_getppg_1(uint32_t * p_data)
 {
-	hw_afe4404_register_read(LED1VAL, p_data, sizeof(uint32_t));
+	hw_afe4404_register_read(LED1VAL, p_data, 3);
 }
 
 void afe4404_app_getppg_all(uint32_t * p_data)
 {
 	uint32_t temp_data[3];
-	hw_afe4404_register_read(LED1VAL, &temp_data[0], sizeof(uint32_t));
-	hw_afe4404_register_read(LED2VAL, &temp_data[1], sizeof(uint32_t));
-	hw_afe4404_register_read(LED2VAL, &temp_data[2], sizeof(uint32_t));
+	hw_afe4404_register_read(LED1VAL, &temp_data[0], 3);
+	hw_afe4404_register_read(LED2VAL, &temp_data[1], 3);
+	hw_afe4404_register_read(LED2VAL, &temp_data[2], 3);
 	memcpy(p_data,temp_data,sizeof(temp_data));
 }
