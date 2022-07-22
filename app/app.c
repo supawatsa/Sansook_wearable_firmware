@@ -12,7 +12,7 @@
 #define  APP_TASK_INTERVAL    APP_TIMER_TICKS(UPDATE_INTERVAL_MS) 
 ret_code_t err_code;
 APP_TIMER_DEF(m_app_timer_id);   
-uint32_t tempppg;
+uint32_t tempppg[3];
 
 //------------------------------------------------------------------------------------
 void app_task(void * p_context)
@@ -22,8 +22,10 @@ void app_task(void * p_context)
   //algorithm_task();
   //ui_task();
   //transfer_task();
-  afe4404_app_getppg_1(&tempppg);
-  NRF_LOG_INFO("ppg1  %d  \n\r", tempppg);
+  afe4404_app_getppg_all(tempppg);
+  NRF_LOG_INFO("ppg1  %d  \n\r", tempppg[0]);
+  NRF_LOG_INFO("ppg2  %d  \n\r", tempppg[1]);
+  NRF_LOG_INFO("ppg3  %d  \n\r", tempppg[2]);
 }
 //------------------------------------------------------------------------------------
 void app_init(void)
@@ -32,11 +34,13 @@ void app_init(void)
   APP_ERROR_CHECK(err_code);
   /*do somthing before start timer*/
   nrf_gpio_pin_dir_set(GPIO_VDD_EN, NRF_GPIO_PIN_DIR_OUTPUT); //enable power
-  nrf_gpio_pin_dir_set(GPIO_MOTOR, NRF_GPIO_PIN_DIR_OUTPUT);
+  nrf_gpio_pin_dir_set(GPIO_VLED_PWR_EN, NRF_GPIO_PIN_DIR_OUTPUT);
   nrf_gpio_pin_set(GPIO_VDD_EN);
+  nrf_gpio_pin_set(GPIO_VLED_PWR_EN);
   afe4404_app_init();
   
-  afe4404_app_getppg_1(&tempppg);
+  //afe4404_app_getppg_1(&tempppg);
+  
   //nrf_gpio_pin_set(GPIO_MOTOR);
   /*start timer*/
   err_code = app_timer_start(m_app_timer_id, APP_TASK_INTERVAL, NULL);

@@ -2,6 +2,7 @@
 <session>
  <Bookmarks/>
  <Breakpoints groups="Breakpoints" active_group="Breakpoints">
+  <BreakpointListItem trigger="" line="191" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="2" filename="../../../../component_driver/ppg/afe4404/afe4404_application.c" useHWbreakpoint="false"/>
   <Exceptions set="MemManage;UsageFault_Coprocessor;UsageFault_CheckingError;UsageFault_StateError;BusFault;ExceptionEntryReturnFault;HardFault"/>
  </Breakpoints>
  <ExecutionProfileWindow/>
@@ -29,6 +30,8 @@
   <ProjectSessionItem path="sansook;sensor_watch_uart_pca10040_s112"/>
   <ProjectSessionItem path="sansook;sensor_watch_uart_pca10040_s112;Application"/>
   <ProjectSessionItem path="sansook;sensor_watch_uart_pca10040_s112;Application;app"/>
+  <ProjectSessionItem path="sansook;sensor_watch_uart_pca10040_s112;Application;imu"/>
+  <ProjectSessionItem path="sansook;sensor_watch_uart_pca10040_s112;Application;ppg"/>
   <ProjectSessionItem path="sansook;sensor_watch_uart_pca10040_s112;Board Definition"/>
   <ProjectSessionItem path="sansook;sensor_watch_uart_pca10040_s112;Board Support"/>
   <ProjectSessionItem path="sansook;sensor_watch_uart_pca10040_s112;None"/>
@@ -62,7 +65,9 @@
  </TraceWindow>
  <Watch1>
   <Watches active="1" update="Never">
-   <Watchpoint expression="tempppg" name="tempppg" radix="-1" linenumber="22" filename="../../../../app/app.c"/>
+   <Watchpoint expression="temp_test_read" name="temp_test_read" radix="16" linenumber="191" filename="../../../../component_driver/ppg/afe4404/afe4404_application.c"/>
+   <Watchpoint expression="buff" name="buff" radix="-1" linenumber="86" filename="../../../../component_driver/ppg/afe4404/afe4404_interface.c"/>
+   <Watchpoint expression="reg_val" name="reg_val" radix="2" linenumber="105" filename="../../../../component_driver/ppg/afe4404/afe4404_application.c"/>
   </Watches>
  </Watch1>
  <Watch2>
@@ -75,10 +80,15 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="6" y="718" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../main.c" selected="0" top="221" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="29" y="29" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../../app/app.c" selected="1" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../../app/algorithm_app.h" selected="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../../app/algorithm_app.c" selected="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="190" useTextEdit="1" openedFrom="C:/Users/su_ku/Desktop/wearable/Sansook_wearable_firmware/app/app.c" useBinaryEdit="0" left="0" path="../../../../component_driver/ppg/afe4404/afe4404_application.c" selected="1" top="176" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="707" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../main.c" selected="0" top="693" codecName=""/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="25" y="24" useTextEdit="1" openedFrom="C:/Users/su_ku/Desktop/wearable/Sansook_wearable_firmware/sansook_wearable_test_driver/main.c" useBinaryEdit="0" left="0" path="../../../../app/app.c" selected="0" top="7" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="95" useTextEdit="1" openedFrom="C:/Users/su_ku/Desktop/wearable/Sansook_wearable_firmware/component_driver/ppg/afe4404/afe4404_application.c" useBinaryEdit="0" left="0" path="../../../../component_driver/ppg/afe4404/afe4404_interface.c" selected="0" top="76" codecName=""/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="571" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../../nRF5_SDK_17.1.0_ddde560/integration/nrfx/legacy/nrf_drv_twi.h" selected="0" top="557" codecName=""/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="21" y="7" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../../component_driver/ppg/afe4404/afe4404_interface.h" selected="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="8" y="142" useTextEdit="1" openedFrom="C:/Users/su_ku/Desktop/wearable/Sansook_wearable_firmware/component_driver/ppg/afe4404/afe4404_application.c" useBinaryEdit="0" left="0" path="../../../../component_driver/ppg/afe4404/afe4404_reg_map.h" selected="0" top="128" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="99" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../../nRF5_SDK_17.1.0_ddde560/components/libraries/util/app_error_weak.c" selected="0" top="85" codecName=""/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="26" y="4" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../../component_driver/ppg/afe4404/afe4404_application.h" selected="0" top="0" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="sensor_watch_uart_pca10040_s112" fileDialogDefaultFilter="*" autoConnectTarget="J-Link" buildConfiguration="Release" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="C:/Users/su_ku/Desktop/wearable/Sansook_wearable_firmware/nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>

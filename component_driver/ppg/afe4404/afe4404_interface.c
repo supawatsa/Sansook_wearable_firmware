@@ -1,6 +1,6 @@
 #include"afe4404_interface.h"
 #include"ConfigurationIO.h"
-#include"nrf_delay.h"
+
 #include <stdint.h>
 
 
@@ -58,7 +58,7 @@ uint32_t hw_afe4404_init(void)
     return NRF_SUCCESS;
 }
 //-----------------------------------------------------------------------------------------------
-uint32_t hw_afe4404_register_read(uint8_t reg, uint8_t * p_data, uint32_t length)
+uint32_t hw_afe4404_register_read_raw(uint8_t reg, uint8_t * p_data, uint32_t length)
 {
     uint32_t err_code;
     uint32_t timeout = TWI_TIMEOUT;
@@ -80,7 +80,24 @@ uint32_t hw_afe4404_register_read(uint8_t reg, uint8_t * p_data, uint32_t length
 
     return err_code;
 }
-
+//-----------------------------------------------------------------------------------------------
+int32_t hw_afe4404_register_read(uint8_t reg)
+{
+  uint8_t buff[3];
+  int32_t readout_reg;
+  uint32_t err_code = hw_afe4404_register_read_raw(reg, buff,sizeof(buff));
+//  if(err_code != NRF_SUCCESS) return -1;
+  readout_reg = (buff[0]<<16)|(buff[1]<<8)|(buff[2]);
+  if (reg >= 0x2A && reg <= 0x2F)
+  {
+	if (readout_reg & 0x00200000) 	// check if the ADC value is positive or negative
+	{
+	  readout_reg &= 0x003FFFFF;		// convert it to a 22 bit value
+	  return (readout_reg^0xFFC00000);
+	}
+  }
+  return readout_reg;
+}
 //-----------------------------------------------------------------------------------------------
 uint32_t hw_afe4404_write_single_register(uint8_t reg, uint16_t data)
 {
@@ -106,10 +123,13 @@ uint32_t hw_afe4404_write_single_register(uint8_t reg, uint16_t data)
 void hw_afe4404_reset(void)
 {
   nrf_gpio_pin_dir_set(GPIO_AFE_RESET, NRF_GPIO_PIN_DIR_OUTPUT);
+  nrf_gpio_pin_clear(GPIO_AFE_RESET);
+  nrf_delay_ms(10);
   nrf_gpio_pin_set(GPIO_AFE_RESET);
+  nrf_delay_ms(10);
   nrf_gpio_pin_clear(GPIO_AFE_RESET);
   nrf_delay_us(40);
   nrf_gpio_pin_set(GPIO_AFE_RESET);
-
+  nrf_delay_ms(10);
 }
 //-----------------------------------------------------------------------------------------------

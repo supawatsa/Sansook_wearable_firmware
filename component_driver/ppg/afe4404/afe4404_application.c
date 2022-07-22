@@ -1,8 +1,10 @@
 #include"afe4404_application.h"
 #include <stdint.h>
+#include <string.h>
+#include "nrf_log.h"
 
-#define LED2STC_timing        (uint16_t)100
-#define LED2ENDC_timing       ((uint16_t)399)
+#define LED2STC_timing        100
+#define LED2ENDC_timing       399
 #define LED1LEDSTC_timing     802
 #define LED1LEDENDC_timing    1201
 #define LED3STC_timing        401
@@ -29,6 +31,9 @@
 #define ADCRSTENDCT2_timing   2545
 #define ADCRSTSTCT3_timing    3608
 #define ADCRSTENDCT3_timing   3614
+#define LED3LEDSTC_timing     401
+#define LED3LEDENDC_timing    800
+
 #define PDNCYCLESTC_timing    5475
 #define PDNCYCLEENDC_timing   39199
 #define PRPCT_counter         39999
@@ -92,11 +97,11 @@ void afe4404_set_int_clk_div( uint8_t div )
 //---------------------------------------------------------------------------------------------
 void afe4404_set_power(void)
 {
-	hw_afe4404_write_single_register(DIAGNOSIS,DIAGNOSIS_SWRESET);
+	hw_afe4404_write_single_register(DIAGNOSIS,DIAGNOSIS_SWRESET|DIAGNOSIS_WRMODE);
 	uint32_t reg_val =0;
-	reg_val = SETTINGS_DY1_DIS|SETTINGS_ILED_100|SETTINGS_DY2_EN|SETTINGS_OSC_EN|SETTINGS_DY3_EN|
-				SETTINGS_DY4_DIS|SETTINGS_RX_DIS|SETTINGS_AFE_DIS;
-
+	reg_val = SETTINGS_DY1_EN|SETTINGS_ILED_100|SETTINGS_DY2_EN|SETTINGS_OSC_EN|SETTINGS_DY3_EN|
+				SETTINGS_DY4_EN|SETTINGS_RX_DIS|SETTINGS_AFE_DIS;
+        nrf_delay_ms(10);
 	hw_afe4404_write_single_register(SETTINGS, reg_val);		//	clock div 0->4Mhz, 1=2=3 -> do not use, 4-> 2Mhz, 5->1Mhz, 6->0.5Mhz, 7-> 0.25Mhz
 }
 
@@ -131,7 +136,9 @@ void afe4404_app_init(void)
 	hw_afe4404_init();
 	afe4404_set_power();
 	afe4404_app_power_normal();
+        
 	hw_afe4404_write_single_register(LED2STC,LED2STC_timing);
+ 
 	hw_afe4404_write_single_register(LED2ENDC,LED2ENDC_timing);
 	hw_afe4404_write_single_register(LED1LEDSTC,LED1LEDSTC_timing);
 	hw_afe4404_write_single_register(LED1LEDENDC,LED1LEDENDC_timing);
@@ -163,29 +170,40 @@ void afe4404_app_init(void)
 	hw_afe4404_write_single_register(ADCRSTENDCT2,ADCRSTENDCT2_timing);
 	hw_afe4404_write_single_register(ADCRSTSTCT3,ADCRSTSTCT3_timing);
 	hw_afe4404_write_single_register(ADCRSTENDCT3,ADCRSTENDCT3_timing);
-	hw_afe4404_write_single_register(PDNCYCLESTC,PDNCYCLESTC_timing);
-	hw_afe4404_write_single_register(PDNCYCLEENDC,PDNCYCLEENDC_timing);
+        hw_afe4404_write_single_register(LED3LEDSTC,LED3LEDSTC_timing);
+        hw_afe4404_write_single_register(LED3LEDENDC,LED3LEDENDC_timing);
+	
+
 
 	afe4404_set_prpct_count( PRPCT_counter ); 
 	afe4404_set_timer_and_average_num( true, 3 );
 	afe4404_set_seperate_tia_gain( true, 0, 4 ); 
 	afe4404_set_tia_gain( false, 0, 3 );
-	afe4404_set_led_currents( 15,3,3 );
+	afe4404_set_led_currents( 5,0,0 ); //red,ir,green
+
 	afe4404_set_clkout_div( false, 2 );
-	afe4404_set_int_clk_div( 1 );
+	afe4404_set_int_clk_div( 0 );
+        hw_afe4404_write_single_register(PDNCYCLESTC,PDNCYCLESTC_timing);
+	hw_afe4404_write_single_register(PDNCYCLEENDC,PDNCYCLEENDC_timing);
+        hw_afe4404_write_single_register(DIAGNOSIS,DIAGNOSIS_RDMODE);
+        uint32_t temp_test_read =0;
+        temp_test_read = hw_afe4404_register_read(SETTINGS);
+        NRF_LOG_INFO("SETTINGS reg =  %d  \n\r", temp_test_read);
 
 }
 //---------------------------------------------------------------------------------------------
 void afe4404_app_getppg_1(uint32_t * p_data)
 {
-	hw_afe4404_register_read(LED1VAL, p_data, 3);
+    uint32_t ppg1temp = hw_afe4404_register_read(LED1VAL);
+    memcpy(&ppg1temp,p_data,sizeof(uint32_t));
+	
 }
 
 void afe4404_app_getppg_all(uint32_t * p_data)
 {
-	uint32_t temp_data[3];
-	hw_afe4404_register_read(LED1VAL, &temp_data[0], 3);
-	hw_afe4404_register_read(LED2VAL, &temp_data[1], 3);
-	hw_afe4404_register_read(LED2VAL, &temp_data[2], 3);
-	memcpy(p_data,temp_data,sizeof(temp_data));
+    uint32_t temp_data[3];
+    temp_data[0] = hw_afe4404_register_read(LED1VAL);
+    temp_data[1] = hw_afe4404_register_read(LED2VAL);
+    temp_data[2] = hw_afe4404_register_read(LED3VAL);
+    memcpy(p_data,temp_data,sizeof(temp_data));
 }
