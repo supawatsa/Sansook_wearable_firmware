@@ -9,10 +9,11 @@
 
 //Diagnosis
 #define DIAGNOSIS         0x00
-#define DIAGNOSIS_SWRESET 1<<3
-#define DIAGNOSIS_CNRESET 1<<1
-#define DIAGNOSIS_WRMODE  0<<0
-#define DIAGNOSIS_RDMODE  1<<0
+#define DIAGNOSIS_SWRESET  1<<3
+#define DIAGNOSIS_TM_RESET 1<<1
+#define DIAGNOSIS_TM_RUN   0<<1
+#define DIAGNOSIS_WRMODE   0<<0
+#define DIAGNOSIS_RDMODE   1<<0
 
 //PRPCT ( timer counter )
 #define PRPCT             0x1D   /**< Bits 0-15 for writing counter value      */

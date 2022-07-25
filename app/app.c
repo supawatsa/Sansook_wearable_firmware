@@ -12,7 +12,7 @@
 #define  APP_TASK_INTERVAL    APP_TIMER_TICKS(UPDATE_INTERVAL_MS) 
 ret_code_t err_code;
 APP_TIMER_DEF(m_app_timer_id);   
-uint32_t tempppg[3];
+uint32_t tempppg[5];
 
 //------------------------------------------------------------------------------------
 void app_task(void * p_context)
@@ -23,9 +23,7 @@ void app_task(void * p_context)
   //ui_task();
   //transfer_task();
   afe4404_app_getppg_all(tempppg);
-  NRF_LOG_INFO("ppg1  %d  \n\r", tempppg[0]);
-  NRF_LOG_INFO("ppg2  %d  \n\r", tempppg[1]);
-  NRF_LOG_INFO("ppg3  %d  \n\r", tempppg[2]);
+
 }
 //------------------------------------------------------------------------------------
 void app_init(void)
