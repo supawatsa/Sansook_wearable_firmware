@@ -3,49 +3,54 @@
 #include <string.h>
 #include "nrf_log.h"
 
-#define LED2STC_timing        100
-#define LED2ENDC_timing       399
-#define LED1LEDSTC_timing     802
-#define LED1LEDENDC_timing    1201
-#define LED3STC_timing        401
-#define LED3ENDC_timing       800
-#define LED1STC_timing        902
-#define LED1ENDC_timing       1201
-#define LED2LEDSTC_timing     0
-#define LED2LEDENDC_timing    399
-#define ALED1STC_timing       1303
-#define ALED1ENDC_timing      1602
-#define LED2CONVST_timing     409
-#define LED2CONVEND_timing    1468
-#define LED3CONVST_timing     1478
-#define LED3CONVEND_timing    2537
-#define LED1CONVST_timing     2547
-#define LED1CONVEND_timing    3606
-#define ALED1CONVST_timing    3616
-#define ALED1CONVEND_timing   4675
-#define ADCRSTSTCT0_timing    401
-#define ADCRSTENDCT0_timing   407
-#define ADCRSTSTCT1_timing    1470
-#define ADCRSTENDCT1_timing   1476
-#define ADCRSTSTCT2_timing    2539
-#define ADCRSTENDCT2_timing   2545
-#define ADCRSTSTCT3_timing    3608
-#define ADCRSTENDCT3_timing   3614
-#define LED3LEDSTC_timing     401
-#define LED3LEDENDC_timing    800
-
 #define PDNCYCLESTC_timing    5475
 #define PDNCYCLEENDC_timing   39199
-#define PRPCT_counter         39999
+#define PRPCT_CNT             39999
+#define INTER_CLOCK_100US     399
+#define INTER_CLOCK_75US      299
+#define INTER_CLOCK_25US      99
+#define INTER_CLOCK_1US75     6
+#define INTER_CLOCK_256US     1059
+
+/*LED2 setting*/
+#define LED2LEDSTC_timing     0
+#define LED2LEDENDC_timing    LED2LEDSTC_timing+INTER_CLOCK_100US
+#define LED2STC_timing        LED2LEDSTC_timing+INTER_CLOCK_25US
+#define LED2ENDC_timing       LED2LEDSTC_timing+INTER_CLOCK_100US
+#define ADCRSTSTCT0_timing    LED2LEDSTC_timing+401
+#define ADCRSTENDCT0_timing   ADCRSTSTCT0_timing+INTER_CLOCK_1US75
+#define LED2CONVST_timing     ADCRSTSTCT0_timing+INTER_CLOCK_1US75+2
+#define LED2CONVEND_timing    ADCRSTSTCT0_timing+INTER_CLOCK_1US75+2+INTER_CLOCK_256US
+/*LED3 setting*/
+#define LED3LEDSTC_timing     LED2LEDSTC_timing+INTER_CLOCK_100US+2
+#define LED3LEDENDC_timing    LED3LEDSTC_timing+INTER_CLOCK_100US
+#define LED3STC_timing        LED3LEDSTC_timing+INTER_CLOCK_25US
+#define LED3ENDC_timing       LED3LEDSTC_timing+INTER_CLOCK_100US
+#define ADCRSTSTCT1_timing    LED3LEDSTC_timing+1069
+#define ADCRSTENDCT1_timing   ADCRSTSTCT1_timing+INTER_CLOCK_1US75
+#define LED3CONVST_timing     ADCRSTSTCT1_timing+INTER_CLOCK_1US75+2
+#define LED3CONVEND_timing    ADCRSTSTCT1_timing+INTER_CLOCK_1US75+2+INTER_CLOCK_256US
+/*LED1 setting*/
+#define LED1LEDSTC_timing     LED3LEDSTC_timing+INTER_CLOCK_100US+2
+#define LED1LEDENDC_timing    LED1LEDSTC_timing+INTER_CLOCK_100US
+#define LED1STC_timing        LED1LEDSTC_timing+INTER_CLOCK_25US
+#define LED1ENDC_timing       LED1LEDSTC_timing+INTER_CLOCK_100US
+#define ADCRSTSTCT2_timing    LED1LEDSTC_timing+1737
+#define ADCRSTENDCT2_timing   ADCRSTSTCT2_timing+INTER_CLOCK_1US75
+#define LED1CONVST_timing     ADCRSTSTCT2_timing+INTER_CLOCK_1US75+2
+#define LED1CONVEND_timing    ADCRSTSTCT2_timing+INTER_CLOCK_1US75+2+INTER_CLOCK_256US
+
+/*amb setting*/
+#define ALED1STC_timing       LED1LEDSTC_timing+INTER_CLOCK_100US+INTER_CLOCK_25US+4//1303
+#define ALED1ENDC_timing      ALED1STC_timing+INTER_CLOCK_75US
+#define ADCRSTSTCT3_timing    ALED1STC_timing+2305
+#define ADCRSTENDCT3_timing   ADCRSTSTCT3_timing+INTER_CLOCK_1US75
+#define ALED1CONVST_timing    ADCRSTENDCT3_timing+2
+#define ALED1CONVEND_timing   ALED1CONVST_timing+INTER_CLOCK_256US
+
 
 //---------------------------------------------------------------------------------------------
-
-void afe4404_set_prpct_count(uint16_t count)
-{
-	hw_afe4404_write_single_register(PRPCT, count);
-}
-//---------------------------------------------------------------------------------------------
-void afe4404_set_timer_and_average_num(bool enable, int avg_cnt)
+void afe4404_set_timer_and_average_num(bool enable, uint8_t avg_cnt)
 {
 	uint32_t temp = 0;
 	temp |= (enable << 8);	// Timer Enable bit -> to use internal timing engine to do sync for sampling, data conv etc.
@@ -55,7 +60,7 @@ void afe4404_set_timer_and_average_num(bool enable, int avg_cnt)
 //---------------------------------------------------------------------------------------------
 void afe4404_set_seperate_tia_gain(bool separate, uint8_t cf_setting, uint8_t gain_setting)
 {
-	uint16_t val =0;
+	uint32_t val =0;
 	val |= (separate << 15); 	//  Separate TIA gains if this bit = 1; else single gain if = 0;
 	val |= (cf_setting << 3);	//  Control of C2 settings (3 bits -> 0-7)
 	val |= (gain_setting << 0);	//  Control of R2 settings (3 bits -> 0-7)
@@ -64,7 +69,7 @@ void afe4404_set_seperate_tia_gain(bool separate, uint8_t cf_setting, uint8_t ga
 //---------------------------------------------------------------------------------------------
 void afe4404_set_tia_gain( bool replace, uint8_t cf_setting, uint8_t gain_setting )
 {
-	uint16_t val =0;
+	uint32_t val =0;
 	val |= (replace << 8);			//  making 1 will replace ADC_RDY output with signal from timing engine.
 									//  controlled by PROG_TG_STC and PROG_TG_ENDC regs.
 	val |= (cf_setting << 3);		//  Control of C1 settings (3 bits -> 0-7)
@@ -84,7 +89,7 @@ void afe4404_set_led_currents( uint8_t led1_current, uint8_t led2_current, uint8
 //---------------------------------------------------------------------------------------------
 void afe4404_set_clkout_div( bool enable, uint8_t div )
 {
-	uint16_t val = 0;
+	uint32_t val = 0;
 	val |= (enable << 9);	//	Enable clock output if enable = 1
 	val |= (div << 1);		//	division value (1 - 7)
 	hw_afe4404_write_single_register(CLKOUT, val);
@@ -97,11 +102,11 @@ void afe4404_set_int_clk_div( uint8_t div )
 //---------------------------------------------------------------------------------------------
 void afe4404_set_power(void)
 {
-	hw_afe4404_write_single_register(DIAGNOSIS,DIAGNOSIS_SWRESET|DIAGNOSIS_WRMODE);
+	hw_afe4404_write_single_register(DIAGNOSIS,DIAGNOSIS_SWRESET|DIAGNOSIS_WRMODE|DIAGNOSIS_TM_RESET);
 	uint32_t reg_val =0;
-	reg_val = SETTINGS_DY1_EN|SETTINGS_ILED_100|SETTINGS_DY2_EN|SETTINGS_OSC_EN|SETTINGS_DY3_EN|
+	reg_val = SETTINGS_DY1_DIS|SETTINGS_ILED_100|SETTINGS_DY2_EN|SETTINGS_OSC_EN|SETTINGS_DY3_DIS|
 				SETTINGS_DY4_EN|SETTINGS_RX_DIS|SETTINGS_AFE_DIS;
-        nrf_delay_ms(10);
+   
 	hw_afe4404_write_single_register(SETTINGS, reg_val);		//	clock div 0->4Mhz, 1=2=3 -> do not use, 4-> 2Mhz, 5->1Mhz, 6->0.5Mhz, 7-> 0.25Mhz
 }
 
@@ -174,21 +179,20 @@ void afe4404_app_init(void)
         hw_afe4404_write_single_register(LED3LEDENDC,LED3LEDENDC_timing);
 	
 
+        hw_afe4404_write_single_register(PRPCT,PRPCT_CNT);
 
-	afe4404_set_prpct_count( PRPCT_counter ); 
-	afe4404_set_timer_and_average_num( true, 3 );
 	afe4404_set_seperate_tia_gain( true, 0, 4 ); 
 	afe4404_set_tia_gain( false, 0, 3 );
-	afe4404_set_led_currents( 5,0,0 ); //red,ir,green
+	afe4404_set_led_currents( 0,0,3 ); //red,ir,green
 
 	afe4404_set_clkout_div( false, 2 );
 	afe4404_set_int_clk_div( 0 );
+
         hw_afe4404_write_single_register(PDNCYCLESTC,PDNCYCLESTC_timing);
 	hw_afe4404_write_single_register(PDNCYCLEENDC,PDNCYCLEENDC_timing);
-        hw_afe4404_write_single_register(DIAGNOSIS,DIAGNOSIS_RDMODE);
-        uint32_t temp_test_read =0;
-        temp_test_read = hw_afe4404_register_read(SETTINGS);
-        NRF_LOG_INFO("SETTINGS reg =  %d  \n\r", temp_test_read);
+        afe4404_set_timer_and_average_num( true, 3 );
+   //     hw_afe4404_write_single_register(DIAGNOSIS,DIAGNOSIS_RDMODE|DIAGNOSIS_TM_RUN);
+
 
 }
 //---------------------------------------------------------------------------------------------
@@ -198,12 +202,25 @@ void afe4404_app_getppg_1(uint32_t * p_data)
     memcpy(&ppg1temp,p_data,sizeof(uint32_t));
 	
 }
-
+//---------------------------------------------------------------------------------------------
 void afe4404_app_getppg_all(uint32_t * p_data)
 {
-    uint32_t temp_data[3];
+    uint32_t temp_data[5];
     temp_data[0] = hw_afe4404_register_read(LED1VAL);
     temp_data[1] = hw_afe4404_register_read(LED2VAL);
     temp_data[2] = hw_afe4404_register_read(LED3VAL);
+    temp_data[3] = hw_afe4404_register_read(ALED1VAL);
+    temp_data[4] = hw_afe4404_register_read(LED1_ALED1VAL);
+    temp_data[5] = hw_afe4404_register_read(LED2_ALED2VAL);
+    
+    
     memcpy(p_data,temp_data,sizeof(temp_data));
+    NRF_LOG_INFO("ppg1  %d  \n\r", temp_data[0]);
+    NRF_LOG_INFO("ppg2  %d  \n\r", temp_data[1]);
+    NRF_LOG_INFO("ppg3  %d  \n\r", temp_data[2]);
+    NRF_LOG_INFO("amb  %d  \n\r", temp_data[3]);
+    NRF_LOG_INFO("led2+3  %d  \n\r", temp_data[4]);
+    NRF_LOG_INFO("led1+amb  %d  \n\r", temp_data[5]);
+
 }
+//---------------------------------------------------------------------------------------------
