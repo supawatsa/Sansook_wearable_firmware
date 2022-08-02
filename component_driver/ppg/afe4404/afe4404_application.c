@@ -4,8 +4,8 @@
 #include "nrf_log.h"
 
 #define PDNCYCLESTC_timing    5475
-#define PDNCYCLEENDC_timing   39199
-#define PRPCT_CNT             39999
+#define PDNCYCLEENDC_timing   79199
+#define PRPCT_CNT             79999 //20ms period
 #define INTER_CLOCK_100US     399
 #define INTER_CLOCK_75US      299
 #define INTER_CLOCK_25US      99
@@ -49,63 +49,39 @@
 #define ALED1CONVEND_timing   ALED1CONVST_timing+INTER_CLOCK_256US
 
 
-//---------------------------------------------------------------------------------------------
-void afe4404_set_timer_and_average_num(bool enable, uint8_t avg_cnt)
-{
-	uint32_t temp = 0;
-	temp |= (enable << 8);	// Timer Enable bit -> to use internal timing engine to do sync for sampling, data conv etc.
-	temp |= avg_cnt;  		// LSB 4 bits (aka 0 - 15)
-	hw_afe4404_write_single_register(TIM_NUMAV, temp);
-}
-//---------------------------------------------------------------------------------------------
-void afe4404_set_seperate_tia_gain(bool separate, uint8_t cf_setting, uint8_t gain_setting)
-{
-	uint32_t val =0;
-	val |= (separate << 15); 	//  Separate TIA gains if this bit = 1; else single gain if = 0;
-	val |= (cf_setting << 3);	//  Control of C2 settings (3 bits -> 0-7)
-	val |= (gain_setting << 0);	//  Control of R2 settings (3 bits -> 0-7)
-	hw_afe4404_write_single_register(TIA_GAINS2, val);
-}
-//---------------------------------------------------------------------------------------------
-void afe4404_set_tia_gain( bool replace, uint8_t cf_setting, uint8_t gain_setting )
-{
-	uint32_t val =0;
-	val |= (replace << 8);			//  making 1 will replace ADC_RDY output with signal from timing engine.
-									//  controlled by PROG_TG_STC and PROG_TG_ENDC regs.
-	val |= (cf_setting << 3);		//  Control of C1 settings (3 bits -> 0-7)
-	val |= (gain_setting << 0);		//  Control of R1 settings (3 bits -> 0-7)
-									//  if separate TIA gains is not enabled, then these will control both (C1 & C2) and (R1 & R2)
-	hw_afe4404_write_single_register(TIA_GAINS1, val);
-}
-//---------------------------------------------------------------------------------------------
-void afe4404_set_led_currents( uint8_t led1_current, uint8_t led2_current, uint8_t led3_current)
+void afe4404_set_led_currents_max50ma( uint8_t led1_current, uint8_t led2_current, uint8_t led3_current)
 {
 	uint32_t val;
-	val |= (led1_current << 0);		// LED 1 addrss space -> 0-5 bits
-	val |= (led2_current << 6);		// LED 2 addrss space -> 6-11 bits
-	val |= (led3_current << 12);	// LED 3 addrss space -> 12-17 bits
+        float current_temp;
+        current_temp = (float)led1_current/0.8f;
+	val |= ((uint8_t)current_temp << 0);		// LED 1 addrss space -> 0-5 bits
+        current_temp = (float)led2_current/0.8f;
+	val |= ((uint8_t)current_temp << 6);		// LED 2 addrss space -> 6-11 bits
+        current_temp = (float)led3_current/0.8f;
+	val |= ((uint8_t)current_temp << 12);            // LED 3 addrss space -> 12-17 bits
 	hw_afe4404_write_single_register(LED_CONFIG, val);
 }
-//---------------------------------------------------------------------------------------------
-void afe4404_set_clkout_div( bool enable, uint8_t div )
+
+void afe4404_set_led_currents_max100ma( uint8_t led1_current, uint8_t led2_current, uint8_t led3_current)
 {
-	uint32_t val = 0;
-	val |= (enable << 9);	//	Enable clock output if enable = 1
-	val |= (div << 1);		//	division value (1 - 7)
-	hw_afe4404_write_single_register(CLKOUT, val);
+        uint32_t val;
+        float current_temp;
+        current_temp = (float)led1_current/1.6f;
+	val |= ((uint8_t)current_temp << 0);		// LED 1 addrss space -> 0-5 bits
+        current_temp = (float)led2_current/1.6f;
+	val |= ((uint8_t)current_temp << 6);		// LED 2 addrss space -> 6-11 bits
+        current_temp = (float)led3_current/1.6f;
+	val |= ((uint8_t)current_temp << 12);            // LED 3 addrss space -> 12-17 bits
+	hw_afe4404_write_single_register(LED_CONFIG, val);
 }
-//---------------------------------------------------------------------------------------------
-void afe4404_set_int_clk_div( uint8_t div )
-{
-	hw_afe4404_write_single_register(CLKDIV_PRF, div);		//	clock div 0->4Mhz, 1=2=3 -> do not use, 4-> 2Mhz, 5->1Mhz, 6->0.5Mhz, 7-> 0.25Mhz
-}
-//---------------------------------------------------------------------------------------------
+
+
 void afe4404_set_power(void)
 {
 	hw_afe4404_write_single_register(DIAGNOSIS,DIAGNOSIS_SWRESET|DIAGNOSIS_WRMODE|DIAGNOSIS_TM_RESET);
 	uint32_t reg_val =0;
 	reg_val = SETTINGS_DY1_DIS|SETTINGS_ILED_100|SETTINGS_DY2_EN|SETTINGS_OSC_EN|SETTINGS_DY3_DIS|
-				SETTINGS_DY4_EN|SETTINGS_RX_DIS|SETTINGS_AFE_DIS;
+                  SETTINGS_DY4_EN|SETTINGS_RX_DIS|SETTINGS_AFE_DIS;
    
 	hw_afe4404_write_single_register(SETTINGS, reg_val);		//	clock div 0->4Mhz, 1=2=3 -> do not use, 4-> 2Mhz, 5->1Mhz, 6->0.5Mhz, 7-> 0.25Mhz
 }
@@ -140,7 +116,7 @@ void afe4404_app_init(void)
         hw_afe4404_reset();
 	hw_afe4404_init();
 	afe4404_set_power();
-	afe4404_app_power_normal();
+	//afe4404_app_power_normal();
         
 	hw_afe4404_write_single_register(LED2STC,LED2STC_timing);
  
@@ -180,18 +156,19 @@ void afe4404_app_init(void)
 	
 
         hw_afe4404_write_single_register(PRPCT,PRPCT_CNT);
+        hw_afe4404_write_single_register(TIA_GAINS1, TIA_PROG_TG_DIS|TIA_CF_5PF|TIA_GAIN_RES_50K);
+	hw_afe4404_write_single_register(TIA_GAINS2, TIA_GAIN_SEPERATE_GAIN|TIA_CF_5PF|TIA_GAIN_RES_25K);
+	
+	afe4404_set_led_currents_max100ma( 5,5,5 ); //red,ir,green 
 
-	afe4404_set_seperate_tia_gain( true, 0, 4 ); 
-	afe4404_set_tia_gain( false, 0, 3 );
-	afe4404_set_led_currents( 0,0,3 ); //red,ir,green
-
-	afe4404_set_clkout_div( false, 2 );
-	afe4404_set_int_clk_div( 0 );
+	hw_afe4404_write_single_register(CLKOUT, CLKOUT_DIS|CLKOUT_DIVISIONBY_4);
+	hw_afe4404_write_single_register(CLKDIV_PRF, CLKDIV_PRF_0);
 
         hw_afe4404_write_single_register(PDNCYCLESTC,PDNCYCLESTC_timing);
 	hw_afe4404_write_single_register(PDNCYCLEENDC,PDNCYCLEENDC_timing);
-        afe4404_set_timer_and_average_num( true, 3 );
-   //     hw_afe4404_write_single_register(DIAGNOSIS,DIAGNOSIS_RDMODE|DIAGNOSIS_TM_RUN);
+
+        hw_afe4404_write_single_register(TIM_NUMAV, TIM_TIMEREN|NUMAV_4AVG);
+        nrf_delay_ms(10);
 
 
 }
@@ -205,20 +182,20 @@ void afe4404_app_getppg_1(uint32_t * p_data)
 //---------------------------------------------------------------------------------------------
 void afe4404_app_getppg_all(uint32_t * p_data)
 {
-    uint32_t temp_data[5];
+    uint32_t temp_data[6];
     temp_data[0] = hw_afe4404_register_read(LED1VAL);
     temp_data[1] = hw_afe4404_register_read(LED2VAL);
     temp_data[2] = hw_afe4404_register_read(LED3VAL);
     temp_data[3] = hw_afe4404_register_read(ALED1VAL);
     temp_data[4] = hw_afe4404_register_read(LED1_ALED1VAL);
-    temp_data[5] = hw_afe4404_register_read(LED2_ALED2VAL);
+    temp_data[5] = hw_afe4404_register_read(LED2_ALED2VAL);//Ignore the content of this register when LED3 
     
     
-    memcpy(p_data,temp_data,sizeof(temp_data));
+    memcpy(p_data,temp_data,sizeof(uint32_t)*6);
     NRF_LOG_INFO("ppg1  %d  \n\r", temp_data[0]);
     NRF_LOG_INFO("ppg2  %d  \n\r", temp_data[1]);
     NRF_LOG_INFO("ppg3  %d  \n\r", temp_data[2]);
-    NRF_LOG_INFO("amb  %d  \n\r", temp_data[3]);
+    NRF_LOG_INFO("amb   %d  \n\r", temp_data[3]);
     NRF_LOG_INFO("led2+3  %d  \n\r", temp_data[4]);
     NRF_LOG_INFO("led1+amb  %d  \n\r", temp_data[5]);
 

@@ -20,11 +20,53 @@
 
 //Timer Module enable / NUMAV ( # of times to sample and average )
 #define TIM_NUMAV         0x1E
+#define TIM_TIMEREN       1<<8
+#define TIM_TIMERDIS      0<<8
+
+#define NUMAV_1SAMPLE     0 //every sample
+#define NUMAV_2AVG        1 //every 2 sample
+#define NUMAV_3AVG        2 
+#define NUMAV_4AVG        3 
+#define NUMAV_5AVG        4 
+#define NUMAV_6AVG        5 
+#define NUMAV_7AVG        6 
+#define NUMAV_8AVG        7 
+#define NUMAV_9AVG        8 
+#define NUMAV_10AVG       9 
+#define NUMAV_11AVG       10 
+#define NUMAV_12AVG       11 
+#define NUMAV_13AVG       12 
+#define NUMAV_14AVG       13 
+#define NUMAV_15AVG       14 
+#define NUMAV_16AVG       15
+
 
 #define TIA_GAINS1        0x21
+#define TIA_PROG_TG_EN        1<<8
+#define TIA_PROG_TG_DIS       0<<8
 
 //TIA Gains 2
 #define TIA_GAINS2        0x20
+#define TIA_GAIN_SINGLE_GAIN   0<<15
+#define TIA_GAIN_SEPERATE_GAIN  1<<15
+#define TIA_GAIN_RES_500K 0
+#define TIA_GAIN_RES_250K 1
+#define TIA_GAIN_RES_100K 2
+#define TIA_GAIN_RES_50K  3
+#define TIA_GAIN_RES_25K  4
+#define TIA_GAIN_RES_10K  5
+#define TIA_GAIN_RES_1M   6
+#define TIA_GAIN_RES_2M   7
+
+#define TIA_CF_5PF   0<<3
+#define TIA_CF_2PF5  1<<3
+#define TIA_CF_10PF  2<<3
+#define TIA_CF_7PF5  3<<3
+#define TIA_CF_20PF  4<<3
+#define TIA_CF_17PF5 5<<3
+#define TIA_CF_25PF  6<<3
+#define TIA_CF_22PF5 7<<3
+
 
 
 //Sample LED2 Start / End
@@ -133,7 +175,16 @@
 	*             7                |       128      |        0.03125             *
 	*         8..15                |    Do not use  |      Do not use            *
 	*****************************************************************************/
-
+#define CLKOUT_DIS  0<<9
+#define CLKOUT_EN   1<<9
+#define CLKOUT_DIVISIONBY_1 0            
+#define CLKOUT_DIVISIONBY_2 1
+#define CLKOUT_DIVISIONBY_4 2
+#define CLKOUT_DIVISIONBY_8 3
+#define CLKOUT_DIVISIONBY_16 4
+#define CLKOUT_DIVISIONBY_32 5
+#define CLKOUT_DIVISIONBY_64 6
+#define CLKOUT_DIVISIONBY_128 7
 //LED1 Output Value
 #define LED1VAL           0x2C  /**< LED1 Output code in twos complement      */
 
@@ -203,7 +254,14 @@
 	*          6         |       8      |     0.5       |            8           *
 	*          7         |      16      |    0.25       |            4           *
 	*****************************************************************************/
-
+#define CLKDIV_PRF_0        0  
+#define CLKDIV_PRF_1        1  
+#define CLKDIV_PRF_2        2  
+#define CLKDIV_PRF_3        3  
+#define CLKDIV_PRF_4        4  
+#define CLKDIV_PRF_5        5  
+#define CLKDIV_PRF_6        6  
+#define CLKDIV_PRF_7        7  
 //DAC Settings
 #define DAC_SETTING       0x3A  /**< DAC Settings Address                     */
 #define POL_OFFDAC_LED2     19  /**< Polarity for LED2                        */

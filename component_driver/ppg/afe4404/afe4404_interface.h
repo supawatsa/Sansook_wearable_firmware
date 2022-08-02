@@ -6,6 +6,8 @@
 #include <nrf_drv_twi.h>
 #include<stdint.h>
 #include"nrf_delay.h"
+#include <string.h>
+#include "nrf_log.h"
 
 void hw_afe4404_event_handler(nrf_drv_twi_evt_t const * p_event, void * p_context);
 uint32_t hw_afe4404_init(void);
