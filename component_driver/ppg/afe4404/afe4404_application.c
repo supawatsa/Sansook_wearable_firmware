@@ -188,9 +188,10 @@ void afe4404_app_getppg_1(uint32_t * p_data)
 	
 }
 //---------------------------------------------------------------------------------------------
+#define NUM_INT32 5
 void afe4404_app_getppg_all(uint32_t * p_data)
 {
-    uint32_t temp_data[5];
+    uint32_t temp_data[NUM_INT32];
     temp_data[0] = hw_afe4404_register_read(LED1VAL);
     temp_data[1] = hw_afe4404_register_read(LED2VAL);
     temp_data[2] = hw_afe4404_register_read(LED3VAL);
@@ -199,12 +200,12 @@ void afe4404_app_getppg_all(uint32_t * p_data)
    // temp_data[5] = hw_afe4404_register_read(LED2_ALED2VAL);//Ignore the content of this register when LED3 
     
     
-    memcpy(p_data,temp_data,sizeof(uint32_t)*5);
-    NRF_LOG_INFO("ppg1  %d  \n\r", temp_data[0]);
-    NRF_LOG_INFO("ppg2  %d  \n\r", temp_data[1]);
-    NRF_LOG_INFO("ppg3  %d  \n\r", temp_data[2]);
-    NRF_LOG_INFO("amb   %d  \n\r", temp_data[3]);
-    NRF_LOG_INFO("led2+3  %d  \n\r", temp_data[4]);
+    memcpy(p_data,temp_data,sizeof(uint32_t)*NUM_INT32);
+    //NRF_LOG_INFO("ppg1  %d  \n\r", temp_data[0]);
+    //NRF_LOG_INFO("ppg2  %d  \n\r", temp_data[1]);
+    //NRF_LOG_INFO("ppg3  %d  \n\r", temp_data[2]);
+    //NRF_LOG_INFO("amb   %d  \n\r", temp_data[3]);
+    //NRF_LOG_INFO("led2+3  %d  \n\r", temp_data[4]);
     //NRF_LOG_INFO("led1+amb  %d  \n\r", temp_data[5]);
 
 }
