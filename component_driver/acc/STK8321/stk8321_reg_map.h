@@ -13,6 +13,9 @@
 #define EVENTINFO1  0x0B
 #define FIFOSTS     0x0C
 #define RANGESEL    0x0F
+#define RANG2G      0x03
+#define RANG4G      0x05
+#define RANG8G      0x08
 #define BWSEL       0x10
 #define POWMODE     0x11
 #define DATASETUP   0x13

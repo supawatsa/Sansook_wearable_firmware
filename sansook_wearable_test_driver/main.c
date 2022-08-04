@@ -645,7 +645,7 @@ void main_task_init(void)
 {
   debug_transfer_dat.header   = 0xAABBCCDD;
   debug_transfer_dat.utc_time = 400;
-  debug_transfer_dat.subsec   = 2;
+  debug_transfer_dat.subsec   = 1000;
   debug_transfer_dat.accx     = 3;
   debug_transfer_dat.accy     = 4;
   debug_transfer_dat.accz     = 5;

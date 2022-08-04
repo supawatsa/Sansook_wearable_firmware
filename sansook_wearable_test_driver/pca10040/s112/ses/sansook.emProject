@@ -103,8 +103,6 @@
         <file file_name="../../../../app/app.c" />
         <file file_name="../../../../app/algorithm_app.h" />
         <file file_name="../../../../app/algorithm_app.c" />
-        <file file_name="../../../../app/ble_communication_service.c" />
-        <file file_name="../../../../app/ble_communication_service.h" />
       </folder>
       <folder Name="ppg">
         <file file_name="../../../../component_driver/ppg/afe4404/afe4404_application.c" />

@@ -7,9 +7,9 @@ typedef struct
   uint32_t  header;
   uint32_t utc_time; 
   uint32_t subsec;
-  uint32_t  accx;
-  uint32_t  accy;
-  uint32_t  accz;
+  int32_t  accx;
+  int32_t  accy;
+  int32_t  accz;
 
   uint32_t ppg1;
   uint32_t ppg2;

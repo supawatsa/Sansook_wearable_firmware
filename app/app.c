@@ -10,9 +10,9 @@
 //------------------------------------------------------------------------------------
 
 #define UPDATE_INTERVAL_MS    20
-#define  APP_TASK_INTERVAL    APP_TIMER_TICKS(UPDATE_INTERVAL_MS) 
+#define APP_TASK_INTERVAL     APP_TIMER_TICKS(UPDATE_INTERVAL_MS) 
 #define UPDATE_INTERVAL_10SEC    500
-#define MAX_MILLIAMP    9
+#define MAX_MILLIAMP    8
 //------------------------------------------------------------------------------------
 ret_code_t err_code;
 APP_TIMER_DEF(m_app_timer_id);   
@@ -50,8 +50,9 @@ void app_task(void * p_context)
   //ui_task();
   //transfer_task();
   //nrf_gpio_pin_set(GPIO_VDD_EN);
+  //stk8321_app_getid();
  
-  stk8321_app_get_acc_x(&debug_transfer_dat.accx);
+  stk8321_app_get_acc_all(&debug_transfer_dat.accx);
   afe4404_app_getppg_all(&debug_transfer_dat.ppg1);
   test_transition();
   //stk8321_app_getid();
