@@ -16,7 +16,7 @@ typedef struct
   uint32_t ppg3;
   uint32_t amb;
   uint32_t led1amb;
-  uint32_t led2amb;
+  uint32_t currentsetting;
   //uint32_t amb;
   //uint32_t ppg2_ppg3;
   //uint32_t ppg1_amb;

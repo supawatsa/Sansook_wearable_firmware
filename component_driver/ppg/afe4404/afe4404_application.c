@@ -74,7 +74,14 @@ void afe4404_set_led_currents_max100ma( uint8_t led1_current, uint8_t led2_curre
 	val |= ((uint8_t)current_temp << 12);            // LED 3 addrss space -> 12-17 bits
 	hw_afe4404_write_single_register(LED_CONFIG, val);
 }
-
+void afe4404_set_led_currents( uint8_t led1_current, uint8_t led2_current, uint8_t led3_current)
+{
+	uint32_t val;
+	val |= (led1_current << 0);		// LED 1 addrss space -> 0-5 bits
+	val |= (led2_current << 6);		// LED 2 addrss space -> 6-11 bits
+	val |= (led3_current << 12);	// LED 3 addrss space -> 12-17 bits
+	hw_afe4404_write_single_register(LED_CONFIG, val);
+}
 
 void afe4404_set_power(void)
 {
@@ -159,7 +166,8 @@ void afe4404_app_init(void)
         hw_afe4404_write_single_register(TIA_GAINS1, TIA_PROG_TG_DIS|TIA_CF_5PF|TIA_GAIN_RES_50K);
 	hw_afe4404_write_single_register(TIA_GAINS2, TIA_GAIN_SEPERATE_GAIN|TIA_CF_5PF|TIA_GAIN_RES_25K);
 	
-	afe4404_set_led_currents_max100ma( 5,5,5 ); //red,ir,green 
+	//afe4404_set_led_currents_max100ma( 5,5,5 ); //red,ir,green 
+        afe4404_set_led_currents(0,0,0);
 
 	hw_afe4404_write_single_register(CLKOUT, CLKOUT_DIS|CLKOUT_DIVISIONBY_4);
 	hw_afe4404_write_single_register(CLKDIV_PRF, CLKDIV_PRF_0);
@@ -182,22 +190,22 @@ void afe4404_app_getppg_1(uint32_t * p_data)
 //---------------------------------------------------------------------------------------------
 void afe4404_app_getppg_all(uint32_t * p_data)
 {
-    uint32_t temp_data[6];
+    uint32_t temp_data[5];
     temp_data[0] = hw_afe4404_register_read(LED1VAL);
     temp_data[1] = hw_afe4404_register_read(LED2VAL);
     temp_data[2] = hw_afe4404_register_read(LED3VAL);
     temp_data[3] = hw_afe4404_register_read(ALED1VAL);
     temp_data[4] = hw_afe4404_register_read(LED1_ALED1VAL);
-    temp_data[5] = hw_afe4404_register_read(LED2_ALED2VAL);//Ignore the content of this register when LED3 
+   // temp_data[5] = hw_afe4404_register_read(LED2_ALED2VAL);//Ignore the content of this register when LED3 
     
     
-    memcpy(p_data,temp_data,sizeof(uint32_t)*6);
+    memcpy(p_data,temp_data,sizeof(uint32_t)*5);
     NRF_LOG_INFO("ppg1  %d  \n\r", temp_data[0]);
     NRF_LOG_INFO("ppg2  %d  \n\r", temp_data[1]);
     NRF_LOG_INFO("ppg3  %d  \n\r", temp_data[2]);
     NRF_LOG_INFO("amb   %d  \n\r", temp_data[3]);
     NRF_LOG_INFO("led2+3  %d  \n\r", temp_data[4]);
-    NRF_LOG_INFO("led1+amb  %d  \n\r", temp_data[5]);
+    //NRF_LOG_INFO("led1+amb  %d  \n\r", temp_data[5]);
 
 }
 //---------------------------------------------------------------------------------------------
