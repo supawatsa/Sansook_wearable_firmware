@@ -206,7 +206,7 @@ void afe4404_app_getppg_all(uint32_t * p_data)
     //NRF_LOG_INFO("ppg3  %d  \n\r", temp_data[2]);
     //NRF_LOG_INFO("amb   %d  \n\r", temp_data[3]);
     //NRF_LOG_INFO("led2+3  %d  \n\r", temp_data[4]);
-    //NRF_LOG_INFO("led1+amb  %d  \n\r", temp_data[5]);
+
 
 }
 //---------------------------------------------------------------------------------------------

@@ -2,10 +2,8 @@
 <session>
  <Bookmarks/>
  <Breakpoints groups="Breakpoints" active_group="Breakpoints">
-  <BreakpointListItem trigger="" line="31" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="4" filename="../../../../app/app.c" useHWbreakpoint="false"/>
   <BreakpointListItem trigger="" line="416" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="4" filename="../../../main.c" useHWbreakpoint="false"/>
-  <BreakpointListItem trigger="" line="478" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="4" filename="../../../../nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/nrfx_spim.c" useHWbreakpoint="false"/>
-  <BreakpointListItem trigger="" line="51" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="2" filename="../../../../component_driver/acc/STK8321/stk8321_interface.c" useHWbreakpoint="false"/>
+  <BreakpointListItem trigger="" line="478" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="2" filename="../../../../nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src/nrfx_spim.c" useHWbreakpoint="false"/>
   <Exceptions set="MemManage;UsageFault_Coprocessor;UsageFault_CheckingError;UsageFault_StateError;BusFault;ExceptionEntryReturnFault;HardFault"/>
  </Breakpoints>
  <ExecutionProfileWindow/>
@@ -68,8 +66,8 @@
  </TraceWindow>
  <Watch1>
   <Watches active="1" update="Never">
-   <Watchpoint expression="tempreturndata" name="tempreturndata" radix="-1" linenumber="46" filename="../../../../component_driver/acc/STK8321/stk8321_application.c"/>
-   <Watchpoint expression="debug_transfer_dat" name="debug_transfer_dat" radix="-1" linenumber="42" filename="../../../../app/app.c"/>
+   <Watchpoint expression="tempreturndata" name="tempreturndata" radix="-1" linenumber="53" filename="../../../../component_driver/acc/STK8321/stk8321_application.c"/>
+   <Watchpoint expression="debug_transfer_dat" name="debug_transfer_dat" radix="-1" linenumber="40" filename="../../../../app/app.c"/>
   </Watches>
  </Watch1>
  <Watch2>
@@ -82,11 +80,11 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="668" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../main.c" selected="1" top="656" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="64" y="28" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../../app/app.c" selected="0" top="22" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="54" y="196" useTextEdit="1" openedFrom="C:/Users/su_ku/Desktop/wearable/Sansook_wearable_firmware/app/app.c" useBinaryEdit="0" left="0" path="../../../../component_driver/ppg/afe4404/afe4404_application.c" selected="0" top="32" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="25" y="687" useTextEdit="1" openedFrom="C:/Users/su_ku/Desktop/wearable/Sansook_wearable_firmware/app/app.c" useBinaryEdit="0" left="0" path="../../../../nRF5_SDK_17.1.0_ddde560/modules/nrfx/hal/nrf_gpio.h" selected="0" top="345" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="8" y="16" useTextEdit="1" openedFrom="C:/Users/su_ku/Desktop/wearable/Sansook_wearable_firmware/app/app.c" useBinaryEdit="0" left="0" path="../../../../ec87/ConfigurationIO.h" selected="0" top="3" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="668" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../main.c" selected="1" top="658" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="24" y="82" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../../app/app.c" selected="0" top="63" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="34" useTextEdit="1" openedFrom="C:/Users/su_ku/Desktop/wearable/Sansook_wearable_firmware/app/app.c" useBinaryEdit="0" left="0" path="../../../../component_driver/acc/STK8321/stk8321_application.c" selected="0" top="27" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="68" y="161" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../../component_driver/ppg/afe4404/afe4404_application.c" selected="0" top="147" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="99" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../../nRF5_SDK_17.1.0_ddde560/components/libraries/util/app_error_weak.c" selected="0" top="87" codecName=""/>
  </Files>
  <ARMCrossStudioWindow activeProject="sensor_watch_uart_pca10040_s112" fileDialogDefaultFilter="*" autoConnectTarget="J-Link" buildConfiguration="Release" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="C:/Users/su_ku/Desktop/wearable/Sansook_wearable_firmware/nRF5_SDK_17.1.0_ddde560/modules/nrfx/drivers/src" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>

@@ -72,6 +72,8 @@
 #define NUS_SERVICE_UUID_TYPE   BLE_UUID_TYPE_VENDOR_BEGIN              /**< UUID type for the Nordic UART Service (vendor specific). */
 
 #define ECHOBACK_BLE_UART_DATA  1                                       /**< Echo the UART data that is received over the Nordic UART Service (NUS) back to the sender. */
+#define RIX1
+
 
 
 BLE_NUS_C_DEF(m_ble_nus_c);                                             /**< BLE Nordic UART Service (NUS) client instance. */
@@ -91,6 +93,17 @@ static ble_uuid_t const m_nus_uuid =
     .type = NUS_SERVICE_UUID_TYPE
 };
 
+//uint8_t focus_address[6];
+
+#ifdef RIX1
+  uint8_t focus_address[]= {0x1e,0xe4,0x97,0xa7,0xbf,0xe1};
+#endif
+#ifdef RIX2
+  uint8_t focus_address[] = {0xfc,0xc8,0x0d,0x22,0x8c,0xca};
+#endif
+#ifdef  RIX3
+  uint8_t focus_address[] = {0x0e,0xa5,0x42,0xdc,0x4d,0xd1};
+#endif
 
 /**@brief Function for handling asserts in the SoftDevice.
  *
@@ -188,10 +201,14 @@ static void scan_init(void)
     err_code = nrf_ble_scan_init(&m_scan, &init_scan, scan_evt_handler);
     APP_ERROR_CHECK(err_code);
 
-    err_code = nrf_ble_scan_filter_set(&m_scan, SCAN_UUID_FILTER, &m_nus_uuid);
+   // err_code = nrf_ble_scan_filter_set(&m_scan, SCAN_UUID_FILTER, &m_nus_uuid);
+   // APP_ERROR_CHECK(err_code);
+
+    err_code = nrf_ble_scan_filter_set(&m_scan, SCAN_ADDR_FILTER, &focus_address);
     APP_ERROR_CHECK(err_code);
 
-    err_code = nrf_ble_scan_filters_enable(&m_scan, NRF_BLE_SCAN_UUID_FILTER, false);
+    err_code = nrf_ble_scan_filters_enable(&m_scan, NRF_BLE_SCAN_ADDR_FILTER, false);
+    //NRF_BLE_SCAN_UUID_FILTER
     APP_ERROR_CHECK(err_code);
 }
 
