@@ -64,7 +64,7 @@ void app_init(void)
   err_code = app_timer_create(&m_app_timer_id,APP_TIMER_MODE_REPEATED,app_task);
   APP_ERROR_CHECK(err_code);
   /*do somthing before start timer*/
- // nrf_gpio_pin_dir_set(GPIO_VDD_EN, NRF_GPIO_PIN_DIR_OUTPUT);       //enable power
+ 
    nrf_gpio_pin_dir_set(GPIO_MOTOR, NRF_GPIO_PIN_DIR_OUTPUT);       //enable power
    nrf_gpio_cfg(
     GPIO_VDD_EN,
@@ -74,6 +74,7 @@ void app_init(void)
     NRF_GPIO_PIN_S0S1,
     NRF_GPIO_PIN_NOSENSE);
   nrf_gpio_pin_dir_set(GPIO_VLED_PWR_EN, NRF_GPIO_PIN_DIR_OUTPUT);
+  nrf_gpio_pin_dir_set(GPIO_SPI_ADS_CS, NRF_GPIO_PIN_DIR_OUTPUT);
  // nrf_gpio_pin_dir_set(GPIO_TX, NRF_GPIO_PIN_DIR_INPUT);
   nrf_gpio_cfg(
     GPIO_TX,
@@ -82,11 +83,10 @@ void app_init(void)
     NRF_GPIO_PIN_PULLUP,
     NRF_GPIO_PIN_S0S1,
     NRF_GPIO_PIN_NOSENSE);
-  nrf_gpio_pin_clear(GPIO_VDD_EN);    //enable power
-  nrf_gpio_pin_set(GPIO_VLED_PWR_EN); //enable power
+  nrf_gpio_pin_clear(GPIO_VDD_EN);        //enable power
+  nrf_gpio_pin_set(GPIO_VLED_PWR_EN);     //enable power
+  nrf_gpio_pin_set(GPIO_SPI_ADS_CS);      //disable ECG chip that use same spi bus with acc
 
-  //nrf_gpio_pin_set(GPIO_VDD_EN);      //disable power
-  //nrf_gpio_pin_clear(GPIO_VLED_PWR_EN); //disable power
 
   afe4404_app_init();
   stk8321_app_init();
